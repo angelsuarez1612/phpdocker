@@ -1,0 +1,28 @@
+version: '3.1'
+services:
+  bookmedik:
+    container_name: cont-bookm
+    image: angelsuarez1612/bookmedik:v1
+    restart: always
+    environment:
+      USER_BOOKMEDIK: admin
+      PASS_BOOKMEDIK: admin
+      DATABASE_HOST: cont-mariadb
+      BD_BOOKMEDIK: bookmedik
+    ports:
+      - 8085:80
+    depends_on:
+      - db
+  db:
+    container_name: cont-mariadb
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: bookmedik
+      MARIADB_USER: admin
+      MARIADB_PASSWORD: admin
+    volumes:
+      - mariadb_data:/var/lib/mysql
+volumes:
+    mariadb_data:
